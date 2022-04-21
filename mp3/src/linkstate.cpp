@@ -47,17 +47,17 @@ int main(int argc, char** argv) {
     // load in all of the config files
     initConfig(argv[1], argv[2], argv[3]);
 
-    // for (int round = 0; round < changeRoundIndex; round++){
-    //     // calculate the path each round
-    //     for (int i = 1; i <= nodeNum; i++){dijkstra(i);}
-    //     displayInfo();
-    //     displayMessages();
-    //     changePerRound(round);
-    // }
+    for (int round = 0; round < changeRoundIndex; round++){
+        // calculate the path each round
+        for (int i = 1; i <= nodeNum; i++){dijkstra(i);}
+        displayInfo();
+        displayMessages();
+        changePerRound(round);
+    }
 
-    // for (int i = 1; i <= nodeNum; i++){dijkstra(i);}
-    // displayInfo();
-    // displayMessages();
+    for (int i = 1; i <= nodeNum; i++){dijkstra(i);}
+    displayInfo();
+    displayMessages();
 
     return 0;
 }
@@ -81,11 +81,14 @@ void changePerRound(int round){
         }
     }
     // no exists, create a new vector
-    vector<int> newGroup;
-    newGroup.push_back(n1);
-    newGroup.push_back(n2);
-    newGroup.push_back(changeContent.at(round));
-    globalPathInfo.push_back(newGroup);
+    if (changeContent.at(round) >= 0){
+        vector<int> newGroup;
+        newGroup.push_back(n1);
+        newGroup.push_back(n2);
+        newGroup.push_back(changeContent.at(round));
+        globalPathInfo.push_back(newGroup);
+    }
+    
 }
 
 void displayMessages(){
