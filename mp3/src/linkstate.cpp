@@ -47,17 +47,17 @@ int main(int argc, char** argv) {
     // load in all of the config files
     initConfig(argv[1], argv[2], argv[3]);
 
-    for (int round = 0; round < changeRoundIndex; round++){
-        // calculate the path each round
-        for (int i = 1; i <= nodeNum; i++){dijkstra(i);}
-        displayInfo();
-        displayMessages();
-        changePerRound(round);
-    }
+    // for (int round = 0; round < changeRoundIndex; round++){
+    //     // calculate the path each round
+    //     for (int i = 1; i <= nodeNum; i++){dijkstra(i);}
+    //     displayInfo();
+    //     displayMessages();
+    //     changePerRound(round);
+    // }
 
-    for (int i = 1; i <= nodeNum; i++){dijkstra(i);}
-    displayInfo();
-    displayMessages();
+    // for (int i = 1; i <= nodeNum; i++){dijkstra(i);}
+    // displayInfo();
+    // displayMessages();
 
     return 0;
 }
