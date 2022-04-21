@@ -198,7 +198,7 @@ void dijkstra(int start){
         }
     }
 
-    for (int i = 0; i <= nodeNum; i++) {
+    for (int i = 1; i <= nodeNum; i++) {
         visited[i] = false;
         costs[i] = INTEGER_MAX;
     }
