@@ -178,6 +178,8 @@ void initConfig(string topoFile, string messFile, string changeFile){
         int node2 = stoi(node2_s);
         int cost = stoi(costs_s);
 
+        nodeNum = max(nodeNum, node1);
+        nodeNum = max(nodeNum, node2);
         changeRoundIndex++;
         changePair.push_back(make_pair(node1, node2));
         changeContent.push_back(cost);
