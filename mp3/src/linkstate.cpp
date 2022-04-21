@@ -231,7 +231,7 @@ void dijkstra(int start){
             // the node has not been visited and the distance is not infinity
             if (!visited[i] && matrix[node][i] != INTEGER_MAX){
                 // have to update the path cost, here use || to break the tie
-                if (cost + matrix[node][i] < costs[i] || (cost + matrix[node][i] < costs[i] && node < lastHop[i])){
+                if (cost + matrix[node][i] < costs[i] || (cost + matrix[node][i] == costs[i] && node < lastHop[i])){
                     // cout<<"update node" << i<<endl;
                     costs[i] = cost + matrix[node][i];
                     lastHop[i] = node;
