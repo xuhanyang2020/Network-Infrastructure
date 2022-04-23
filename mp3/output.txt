@@ -28,8 +28,8 @@
 3 2 7
 4 4 1
 5 5 0
-from 2 to 1 cost 6 hops 2 5 4 message send this message from 2 to 1
-from 3 to 2 cost 3 hops 3 message hello world
+from 2 to 1 cost 6 hops 2 5 4 message here is a message from 2 to 1
+from 3 to 5 cost 7 hops 3 2 message this one gets sent from 3 to 5!
 
 
 1 1 0
@@ -61,8 +61,8 @@ from 3 to 2 cost 3 hops 3 message hello world
 3 4 5
 4 4 1
 5 5 0
-from 2 to 1 cost 2 hops 2 4 message send this message from 2 to 1
-from 3 to 2 cost 3 hops 3 message hello world
+from 2 to 1 cost 2 hops 2 4 message here is a message from 2 to 1
+from 3 to 5 cost 5 hops 3 2 4 message this one gets sent from 3 to 5!
 
 
 1 1 0
@@ -94,6 +94,6 @@ from 3 to 2 cost 3 hops 3 message hello world
 3 2 7
 4 4 1
 5 5 0
-from 2 to 1 cost 6 hops 2 5 4 message send this message from 2 to 1
-from 3 to 2 cost 3 hops 3 message hello world
+from 2 to 1 cost 6 hops 2 5 4 message here is a message from 2 to 1
+from 3 to 5 cost 7 hops 3 2 message this one gets sent from 3 to 5!
 
