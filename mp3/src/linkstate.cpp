@@ -101,6 +101,7 @@ void changePerRound(int round){
 
 void displayMessages(){
     int messNum = messagePair.size();
+    outFile<<endl;
     for (int i = 0; i < messNum; i++){
         int startNode = messagePair.at(i).first;
         int dest = messagePair.at(i).second;
