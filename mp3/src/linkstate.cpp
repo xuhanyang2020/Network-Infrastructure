@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <vector>
 #include <queue>
+#include <algorithm>
 #include <unordered_set>
 
 using namespace std;
@@ -22,6 +23,7 @@ void changePerRound(int round);
 vector<vector<int> > globalPathInfo;
 unordered_map<int, unordered_map<int, vector<int> > > nodePathMap;
 unordered_map<int, unordered_map<int, int > > nodeCost;
+unordered_set<int> nodes;
 
 // unordered_map<int, unordered_map<int, string> > messageMap;
 vector<pair<int, int> > messagePair;
@@ -30,7 +32,7 @@ vector<string> messageContent;
 vector<pair<int, int> > changePair;
 vector<int> changeContent;
 
-int nodeNum = 0;
+// int nodeNum = 0;
 int changeRoundIndex = 0;
 ofstream outFile;
 
@@ -49,13 +51,17 @@ int main(int argc, char** argv) {
 
     for (int round = 0; round < changeRoundIndex; round++){
         // calculate the path each round
-        for (int i = 1; i <= nodeNum; i++){dijkstra(i);}
+        for (int i : nodes){
+            dijkstra(i);
+        }
         displayInfo();
         displayMessages();
         changePerRound(round);
     }
 
-    for (int i = 1; i <= nodeNum; i++){dijkstra(i);}
+    for (int i : nodes){
+        dijkstra(i);
+    }
     displayInfo();
     displayMessages();
 
@@ -66,6 +72,8 @@ void changePerRound(int round){
     // cout<<"change round "<<round<<endl;
     int n1 = changePair.at(round).first;
     int n2 = changePair.at(round).second;
+    nodes.insert(n1);
+    nodes.insert(n2);
     // if exists in global path, update for delele the content
     for (int i = 0; i < globalPathInfo.size(); i++){
         if ((n1 == globalPathInfo.at(i).at(0) && n2 == globalPathInfo.at(i).at(1)) ||
@@ -130,9 +138,8 @@ void initConfig(string topoFile, string messFile, string changeFile){
         int node1 = stoi(node1_s);
         int node2 = stoi(node2_s);
         int cost = stoi(cost_s);
-        // update nodeNum
-        nodeNum = max(nodeNum, node1);
-        nodeNum = max(nodeNum, node2);
+        nodes.insert(node1);
+        nodes.insert(node2);
         // construct global path vector
         vector<int> group;
         group.push_back(node1);
@@ -178,8 +185,6 @@ void initConfig(string topoFile, string messFile, string changeFile){
         int node2 = stoi(node2_s);
         int cost = stoi(costs_s);
 
-        nodeNum = max(nodeNum, node1);
-        nodeNum = max(nodeNum, node2);
         changeRoundIndex++;
         changePair.push_back(make_pair(node1, node2));
         changeContent.push_back(cost);
@@ -187,18 +192,23 @@ void initConfig(string topoFile, string messFile, string changeFile){
 }
 
 void dijkstra(int start){
-    int matrix[nodeNum + 1][nodeNum + 1]; // 2D array to store local path cost
-    int costs[nodeNum + 1]; // cost to all nodes
-    int lastHop[nodeNum + 1]; // last hop before reaching target
-    bool visited[nodeNum + 1]; // store visited nodes
+    // int matrix[nodeNum + 1][nodeNum + 1]; // 2D array to store local path cost
+    // int costs[nodeNum + 1]; // cost to all nodes
+    // int lastHop[nodeNum + 1]; // last hop before reaching target
+    // bool visited[nodeNum + 1]; // store visited nodes
 
-    for (int i = 1; i <= nodeNum; i++){
-        for (int j = 1; j <= nodeNum; j++){
+    unordered_map<int, unordered_map<int, int> > matrix; // key1 key2 : nodes     value : cost
+    unordered_map<int, int> costs;
+    unordered_map<int, int> lastHop;
+    unordered_map<int, bool> visited;
+
+    for (int i : nodes){
+        for (int j : nodes){
             matrix[i][j] = i == j ? 0 : INTEGER_MAX;
         }
     }
 
-    for (int i = 1; i <= nodeNum; i++) {
+    for (int i : nodes) {
         visited[i] = false;
         costs[i] = INTEGER_MAX;
     }
@@ -231,7 +241,7 @@ void dijkstra(int start){
         if (visited[node]){continue;}
         visited[node] = true;
         // cout<<"current node is" << node<<endl;
-        for (int i = 1; i <= nodeNum; i++){
+        for (int i : nodes){
             // cout<<"i == "<<i<<endl;
             // the node has not been visited and the distance is not infinity
             if (!visited[i] && matrix[node][i] != INTEGER_MAX){
@@ -251,12 +261,12 @@ void dijkstra(int start){
     //     cout<< i << "   cost   " << costs[i] << "   lasthop  " << lastHop[i]<<endl;
     // }
     // update costs vector
-    for (int i = 1; i <= nodeNum; i++){
+    for (int i : nodes){
         nodeCost[start][i] = costs[i];
     }
     // calculate the path
     unordered_map<int, vector<int> > path;
-    for (int i = 1; i <= nodeNum; i++){
+    for (int i : nodes){
         vector<int> tmp;
         // if the node is not reachable, add a void vector and continue
         if (costs[i] == INTEGER_MAX){
@@ -279,12 +289,22 @@ void dijkstra(int start){
 
 void displayInfo(){
     // traverse all the nodes
-    for (int node = 1; node <= nodeNum; node++){
+    // for (int node = 1; node <= nodeNum; node++){
+    vector<int> nodes_vec;
+    for (int node : nodes) {
+        nodes_vec.push_back(node);
+    }
+    sort(nodes_vec.begin(), nodes_vec.end());
+    for (int j = 0; j < nodes_vec.size(); j++){
+        int node = nodes_vec.at(j);
         unordered_map<int, vector<int> > map1 = nodePathMap[node];
         // outFile<<"topology entries for node "<<node<<endl;
         outFile<<endl;
         // for each node, print out the topo
-        for (int i = 1; i <= nodeNum; i++){
+        // for (int i = 1; i <= nodeNum; i++){
+        
+        for (int ii = 0; ii < nodes_vec.size(); ii++){
+            int i = nodes_vec.at(ii);
             vector<int> p = map1[i];
             // if the node is not reachable, do not need to print it out
             if (p.size() == 0) continue;
