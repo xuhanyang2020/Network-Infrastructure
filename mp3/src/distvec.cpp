@@ -163,7 +163,8 @@ void readMessage(string file) {
  if (msgfile.is_open()) {
   //read the message line by line
   while (getline(msgfile, line)) {
-	
+   if(line.length()==0)
+    {continue;}	
    int src, dest;
    //scan the information
    sscanf(line.c_str(), "%d %d %*s", &src, &dest);
