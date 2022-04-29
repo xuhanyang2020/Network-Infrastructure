@@ -82,8 +82,7 @@ void changePerRound(int round){
     // cout<<"change round "<<round<<endl;
     int n1 = changePair.at(round).first;
     int n2 = changePair.at(round).second;
-    nodes.insert(n1);
-    nodes.insert(n2);
+    
     // if exists in global path, update for delele the content
     for (int i = 0; i < globalPathInfo.size(); i++){
         if ((n1 == globalPathInfo.at(i).at(0) && n2 == globalPathInfo.at(i).at(1)) ||
@@ -100,6 +99,8 @@ void changePerRound(int round){
     }
     // no exists, create a new vector
     if (changeContent.at(round) >= 0){
+        nodes.insert(n1);
+        nodes.insert(n2);
         vector<int> newGroup;
         newGroup.push_back(n1);
         newGroup.push_back(n2);
