@@ -91,7 +91,7 @@ void changePerRound(int round){
             if (changeContent.at(round) >= 0){
                 // update the path
                 globalPathInfo.at(i).at(2) = changeContent.at(round);
-            } else {
+            } else if (changeContent.at(round) == -999){
                 // delete the path
                 globalPathInfo.erase(globalPathInfo.begin() + i);
             }
