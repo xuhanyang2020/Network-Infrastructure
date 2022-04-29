@@ -36,6 +36,16 @@ vector<int> changeContent;
 int changeRoundIndex = 0;
 ofstream outFile;
 
+struct cmp_pq {
+    bool operator () (const pair<int, int> &p1, const pair<int, int> &p2) {
+        if (p1.first != p2.first) {
+            return p1.first > p2.first;
+        } else {
+            return p1.second > p2.second;
+        }
+    }
+};
+
 // unordered_map<int, int> next
 
 int main(int argc, char** argv) {
@@ -240,7 +250,7 @@ void dijkstra(int start){
     //     cout<<endl;
     // }
     
-    priority_queue<pair<int, int> , vector<pair<int, int> >, greater<pair<int, int> > > pq; // min heap
+    priority_queue<pair<int, int> , vector<pair<int, int> >, cmp_pq> pq; // min heap
     pq.push(make_pair(0, start));
     while (!pq.empty()){
         pair<int, int> tmp = pq.top();
