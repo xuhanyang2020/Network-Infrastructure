@@ -25,14 +25,12 @@ unordered_map<int, unordered_map<int, vector<int> > > nodePathMap;
 unordered_map<int, unordered_map<int, int > > nodeCost;
 unordered_set<int> nodes;
 
-// unordered_map<int, unordered_map<int, string> > messageMap;
 vector<pair<int, int> > messagePair;
 vector<string> messageContent;
 
 vector<pair<int, int> > changePair;
 vector<int> changeContent;
 
-// int nodeNum = 0;
 int changeRoundIndex = 0;
 ofstream outFile;
 
@@ -46,10 +44,7 @@ struct cmp_pq {
     }
 };
 
-// unordered_map<int, int> next
-
 int main(int argc, char** argv) {
-    //printf("Number of arguments: %d", argc);
     if (argc != 4) {
         printf("Usage: ./linkstate topofile messagefile changesfile\n");
         return -1;
@@ -79,7 +74,6 @@ int main(int argc, char** argv) {
 }
 
 void changePerRound(int round){
-    // cout<<"change round "<<round<<endl;
     int n1 = changePair.at(round).first;
     int n2 = changePair.at(round).second;
     
@@ -112,7 +106,6 @@ void changePerRound(int round){
 
 void displayMessages(){
     int messNum = messagePair.size();
-    // outFile<<endl;
     for (int i = 0; i < messNum; i++){
         int startNode = messagePair.at(i).first;
         int dest = messagePair.at(i).second;
@@ -130,7 +123,6 @@ void displayMessages(){
             outFile<<messageContent.at(i)<<endl;
         }
     }
-    // outFile<<endl;
 
 }
 
@@ -213,11 +205,6 @@ void initConfig(string topoFile, string messFile, string changeFile){
 }
 
 void dijkstra(int start){
-    // int matrix[nodeNum + 1][nodeNum + 1]; // 2D array to store local path cost
-    // int costs[nodeNum + 1]; // cost to all nodes
-    // int lastHop[nodeNum + 1]; // last hop before reaching target
-    // bool visited[nodeNum + 1]; // store visited nodes
-
     unordered_map<int, unordered_map<int, int> > matrix; // key1 key2 : nodes     value : cost
     unordered_map<int, int> costs;
     unordered_map<int, int> lastHop;
@@ -243,13 +230,6 @@ void dijkstra(int start){
         matrix[n1][n2] = localCost;
         matrix[n2][n1] = localCost;
     }
-
-    // for (int i = 1; i <= nodeNum; i++){
-    //     for (int j = 1; j <= nodeNum; j++){
-    //         cout<<matrix[i][j]<<" ";
-    //     }
-    //     cout<<endl;
-    // }
     
     priority_queue<pair<int, int> , vector<pair<int, int> >, cmp_pq> pq; // min heap
     pq.push(make_pair(0, start));
@@ -257,18 +237,17 @@ void dijkstra(int start){
         pair<int, int> tmp = pq.top();
         int cost = tmp.first;
         int node = tmp.second;
-        // cout<<"current node is" << node<<endl;
+        
         pq.pop();
         if (visited[node]){continue;}
         visited[node] = true;
-        // cout<<"current node is" << node<<endl;
+
         for (int i : nodes){
-            // cout<<"i == "<<i<<endl;
             // the node has not been visited and the distance is not infinity
             if (!visited[i] && matrix[node][i] != INTEGER_MAX){
                 // have to update the path cost, here use || to break the tie
                 if (cost + matrix[node][i] < costs[i] || (cost + matrix[node][i] == costs[i] && node < lastHop[i])){
-                    // cout<<"update node" << i<<endl;
+                    
                     costs[i] = cost + matrix[node][i];
                     lastHop[i] = node;
                     pq.push(make_pair(costs[i], i));
@@ -276,11 +255,6 @@ void dijkstra(int start){
             }
         }
     }
-    // print the routing table
-    // cout<< "topology entries for node "<<start<<endl;
-    // for (int i = 1; i <= nodeNum; i++){
-    //     cout<< i << "   cost   " << costs[i] << "   lasthop  " << lastHop[i]<<endl;
-    // }
     // update costs vector
     for (int i : nodes){
         nodeCost[start][i] = costs[i];
@@ -310,7 +284,6 @@ void dijkstra(int start){
 
 void displayInfo(){
     // traverse all the nodes
-    // for (int node = 1; node <= nodeNum; node++){
     vector<int> nodes_vec;
     for (int node : nodes) {
         nodes_vec.push_back(node);
@@ -319,10 +292,6 @@ void displayInfo(){
     for (int j = 0; j < nodes_vec.size(); j++){
         int node = nodes_vec.at(j);
         unordered_map<int, vector<int> > map1 = nodePathMap[node];
-        // outFile<<"topology entries for node "<<node<<endl;
-        // outFile<<endl;
-        // for each node, print out the topo
-        // for (int i = 1; i <= nodeNum; i++){
         
         for (int ii = 0; ii < nodes_vec.size(); ii++){
             int i = nodes_vec.at(ii);
