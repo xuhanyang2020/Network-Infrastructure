@@ -130,7 +130,9 @@ void initConfig(string topoFile, string messFile, string changeFile){
     while (getline(inTopo, line)){
         stringstream sstr;
         sstr << line;
-
+        if (line.size() == 0){
+            continue;
+        }
         string node1_s, node2_s, cost_s;
         getline(sstr, node1_s, ' ');
         getline(sstr, node2_s, ' ');
@@ -154,6 +156,10 @@ void initConfig(string topoFile, string messFile, string changeFile){
     string messLine;
     while (getline(inMess, messLine))
     {
+        if (messLine.size() == 0){
+            continue;
+        }
+        // cout<<messLine<<endl;
         stringstream sstr;
         sstr << messLine;
         
@@ -176,6 +182,9 @@ void initConfig(string topoFile, string messFile, string changeFile){
     {
         stringstream sstr;
         sstr << changeLine;
+        if (changeLine.size() == 0){
+            continue;
+        }
         // cout<<"newline in change file"<<endl;
         string node1_s, node2_s, costs_s;
         getline(sstr, node1_s, ' ');
