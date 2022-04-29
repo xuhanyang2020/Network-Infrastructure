@@ -112,7 +112,7 @@ void changePerRound(int round){
 
 void displayMessages(){
     int messNum = messagePair.size();
-    outFile<<endl;
+    // outFile<<endl;
     for (int i = 0; i < messNum; i++){
         int startNode = messagePair.at(i).first;
         int dest = messagePair.at(i).second;
@@ -130,7 +130,7 @@ void displayMessages(){
             outFile<<messageContent.at(i)<<endl;
         }
     }
-    outFile<<endl;
+    // outFile<<endl;
 
 }
 
@@ -320,7 +320,7 @@ void displayInfo(){
         int node = nodes_vec.at(j);
         unordered_map<int, vector<int> > map1 = nodePathMap[node];
         // outFile<<"topology entries for node "<<node<<endl;
-        outFile<<endl;
+        // outFile<<endl;
         // for each node, print out the topo
         // for (int i = 1; i <= nodeNum; i++){
         
