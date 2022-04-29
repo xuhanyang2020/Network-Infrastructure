@@ -126,9 +126,9 @@ void getforwardtable(unordered_map<int, unordered_map<int, pair<int, int> > > &f
     
      if (topo[src][*l] >= 0 && forward_table[*l][dest].second >= 0) {
       int new_Cost = topo[src][*l] + forward_table[*l][dest].second;
-	 
+      
       //reset next hop and minimium cost
-      if (min_Cost < 0 || new_Cost < min_Cost) {
+      if (min_Cost < 0 || new_Cost < min_Cost || (new_Cost==min_Cost && *l< next_hop && *l !=src)) {
       
        next_hop = *l;
        min_Cost = new_Cost;
@@ -152,6 +152,7 @@ void getforwardtable(unordered_map<int, unordered_map<int, pair<int, int> > > &f
    outputfile << dest << " " << forward_table[src][dest].first << " " << forward_table[src][dest].second << endl;
   }
  }
+ 
 }
 	
 //this function is to read the message from the file
@@ -196,6 +197,7 @@ void sendMessage() {
    outputfile << cost << " hops ";
    //before reaching the destination, we need to print the next hop
    while (next_hop != dest) {
+   
     outputfile << next_hop << " ";
     //to find the next hop, we just need to set previous "next_hop" as src
     next_hop = forward_table[next_hop][dest].first;
@@ -226,6 +228,7 @@ void doChanges(string file) {
  
  if (change.is_open()) {
   while (change >> src >> dest >> cost) {
+   
    //put new information into topo
    topo[src][dest] = cost;
    topo[dest][src] = cost;
@@ -258,7 +261,7 @@ int main(int argc, char **argv) {
 
  //get the forward table
  getforwardtable(forward_table);
-
+ 
  //read the message
  readMessage(messagefile);
 
