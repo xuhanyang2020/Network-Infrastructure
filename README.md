@@ -1,9 +1,11 @@
-<<<<<<< HEAD
-# CS 438 (sp22) repo for NetID: hx13
+# Network Infrastructure for TCP/IP
 
-GitHub username at initialization time: xuhanyang2020
-=======
-# CS 438 (sp22)
->>>>>>> release/main
+## HTTP concurrent protocol
 
-For next steps, please refer to the instructions provided by your course.
+
+## TCP congestion control
+Here I des
+## network topology routing
+
+In the network layer of the TCP/TP protocol stack is the IP protocol. The 
+
